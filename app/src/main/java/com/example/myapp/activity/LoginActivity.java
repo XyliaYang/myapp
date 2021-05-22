@@ -70,7 +70,7 @@ public class LoginActivity extends BaseActivity {
                 .build();
         //第二步构建Request对象
         Request request = new Request.Builder()
-                .url(AppConfig.BASE_URL)
+                .url(AppConfig.BASE_URL+"/app/login.py")
                 .get()
                 .build();
         //第三步构建Call对象
@@ -79,12 +79,18 @@ public class LoginActivity extends BaseActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.i("onFailure", e.getMessage());
+                Log.e("onFailure", e.getMessage());
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
-                Log.i("result", result);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showToast(result);
+                    }
+                });
+
             }
         });
 
