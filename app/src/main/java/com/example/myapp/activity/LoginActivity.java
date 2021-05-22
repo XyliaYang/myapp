@@ -2,6 +2,7 @@ package com.example.myapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapp.R;
+import com.example.myapp.api.Api;
+import com.example.myapp.api.ApiConfig;
+import com.example.myapp.api.TtitCallback;
 import com.example.myapp.util.AppConfig;
 import com.example.myapp.util.StringUtils;
 
@@ -67,41 +71,63 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        //第一步获取okHttpClient对象
-        OkHttpClient client = new OkHttpClient.Builder()
-                .build();
-        //第二步构建Request对象
-        Map map=new HashMap();
-        map.put("mobile",user);
-        map.put("password",pwd);
-        JSONObject jsonObject=new JSONObject(map);
-        RequestBody requestBody=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),jsonObject.toString());
-
-        Request request=new Request.Builder()
-                .url(AppConfig.BASE_URL+"/login")
-                .addHeader("Content-Type","application/json;charset=UTF-8")
-                .post(requestBody)
-                .build();
-
-        final Call call=client.newCall(request);
-        call.enqueue(new Callback() {
+        HashMap<String,Object> params=new HashMap();
+        params.put("mobile",user);
+        params.put("password",pwd);
+        Api.config(ApiConfig.LOGIN, params).postRequest(new TtitCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("onfailure","failed");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String result=response.body().string();
+            public void onSuccess(String res) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showToast(result);
+                        showToast(res);
                     }
                 });
+            }
 
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("failed",e.getMessage());
             }
         });
+
+
+
+//        //第一步获取okHttpClient对象
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .build();
+//        //第二步构建Request对象
+//        Map map=new HashMap();
+//        map.put("mobile",user);
+//        map.put("password",pwd);
+//        JSONObject jsonObject=new JSONObject(map);
+//        RequestBody requestBody=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),jsonObject.toString());
+//
+//        Request request=new Request.Builder()
+//                .url(AppConfig.BASE_URL+"/login")
+//                .addHeader("Content-Type","application/json;charset=UTF-8")
+//                .post(requestBody)
+//                .build();
+//
+//        final Call call=client.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.e("onfailure","failed");
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                String result=response.body().string();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        showToast(result);
+//                    }
+//                });
+//
+//            }
+//        });
 
     }
 }
