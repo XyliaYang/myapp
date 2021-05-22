@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.textclassifier.ConversationActions;
+import android.view.textclassifier.TextClassification;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -69,21 +71,28 @@ public class LoginActivity extends BaseActivity {
         OkHttpClient client = new OkHttpClient.Builder()
                 .build();
         //第二步构建Request对象
-        Request request = new Request.Builder()
-                .url(AppConfig.BASE_URL+"/app/login.py")
-                .get()
+        Map map=new HashMap();
+        map.put("mobile",user);
+        map.put("password",pwd);
+        JSONObject jsonObject=new JSONObject(map);
+        RequestBody requestBody=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),jsonObject.toString());
+
+        Request request=new Request.Builder()
+                .url(AppConfig.BASE_URL+"/login")
+                .addHeader("Content-Type","application/json;charset=UTF-8")
+                .post(requestBody)
                 .build();
-        //第三步构建Call对象
-        Call call = client.newCall(request);
-        //第四步:异步get请求
+
+        final Call call=client.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("onFailure", e.getMessage());
+                Log.e("onfailure","failed");
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String result = response.body().string();
+                String result=response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -93,7 +102,6 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-
 
     }
 }
