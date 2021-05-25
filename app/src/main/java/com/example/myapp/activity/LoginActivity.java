@@ -2,8 +2,11 @@ package com.example.myapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.icu.util.LocaleData;
+import android.media.session.MediaSession;
 import android.os.Bundle;
+import android.os.TokenWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.textclassifier.ConversationActions;
@@ -15,8 +18,10 @@ import com.example.myapp.R;
 import com.example.myapp.api.Api;
 import com.example.myapp.api.ApiConfig;
 import com.example.myapp.api.TtitCallback;
+import com.example.myapp.entity.LoginResponse;
 import com.example.myapp.util.AppConfig;
 import com.example.myapp.util.StringUtils;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -77,12 +82,24 @@ public class LoginActivity extends BaseActivity {
         Api.config(ApiConfig.LOGIN, params).postRequest(new TtitCallback() {
             @Override
             public void onSuccess(String res) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showToast(res);
-                    }
-                });
+                Log.e("onSuccess",res);
+//                showToastSync(res);
+                Gson gson=new Gson();
+                LoginResponse loginResponse=gson.fromJson(res,LoginResponse.class);
+                if(loginResponse.getCode()==0){
+                    String token=loginResponse.getToken();
+//                    SharedPreferences sp=getSharedPreferences("sp_ttit",MODE_PRIVATE);
+//                    SharedPreferences.Editor editor=sp.edit();
+//                    editor.putString("token", token);
+//                    editor.apply();
+                    saveStringTosp("token",token);
+                    showToastSync("登录成功");
+
+                }else{
+                    showToastSync("登录失败");
+                }
+
+
             }
 
             @Override
