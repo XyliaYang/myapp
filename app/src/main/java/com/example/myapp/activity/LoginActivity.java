@@ -46,14 +46,20 @@ public class LoginActivity extends BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected int initLayout() {
+        return R.layout.activity_login;
+    }
 
+    @Override
+    protected void initView() {
         editUser=findViewById(R.id.edt_user);
         editPwd=findViewById(R.id.edt_pwd);
         btnLogin=findViewById(R.id.btn_login_in);
 
+    }
+
+    @Override
+    protected void initData() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,76 +81,44 @@ public class LoginActivity extends BaseActivity {
             showToast("请输入密码");
             return;
         }
-
-        HashMap<String,Object> params=new HashMap();
-        params.put("mobile",user);
-        params.put("password",pwd);
-        Api.config(ApiConfig.LOGIN, params).postRequest(new TtitCallback() {
-            @Override
-            public void onSuccess(String res) {
-                Log.e("onSuccess",res);
-//                showToastSync(res);
-                Gson gson=new Gson();
-                LoginResponse loginResponse=gson.fromJson(res,LoginResponse.class);
-                if(loginResponse.getCode()==0){
-                    String token=loginResponse.getToken();
-//                    SharedPreferences sp=getSharedPreferences("sp_ttit",MODE_PRIVATE);
-//                    SharedPreferences.Editor editor=sp.edit();
-//                    editor.putString("token", token);
-//                    editor.apply();
-                    saveStringTosp("token",token);
-                    showToastSync("登录成功");
-
-                }else{
-                    showToastSync("登录失败");
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("failed",e.getMessage());
-            }
-        });
-
-
-
-//        //第一步获取okHttpClient对象
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .build();
-//        //第二步构建Request对象
-//        Map map=new HashMap();
-//        map.put("mobile",user);
-//        map.put("password",pwd);
-//        JSONObject jsonObject=new JSONObject(map);
-//        RequestBody requestBody=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),jsonObject.toString());
+        
+//        用接口登录部分
 //
-//        Request request=new Request.Builder()
-//                .url(AppConfig.BASE_URL+"/login")
-//                .addHeader("Content-Type","application/json;charset=UTF-8")
-//                .post(requestBody)
-//                .build();
-//
-//        final Call call=client.newCall(request);
-//        call.enqueue(new Callback() {
+//        HashMap<String,Object> params=new HashMap();
+//        params.put("mobile",user);
+//        params.put("password",pwd);
+//        Api.config(ApiConfig.LOGIN, params).postRequest(new TtitCallback() {
 //            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Log.e("onfailure","failed");
+//            public void onSuccess(String res) {
+//                Log.e("onSuccess",res);
+////                showToastSync(res);
+//                Gson gson=new Gson();
+//                LoginResponse loginResponse=gson.fromJson(res,LoginResponse.class);
+//                if(loginResponse.getCode()==0){
+//                    String token=loginResponse.getToken();
+////                    SharedPreferences sp=getSharedPreferences("sp_ttit",MODE_PRIVATE);
+////                    SharedPreferences.Editor editor=sp.edit();
+////                    editor.putString("token", token);
+////                    editor.apply();
+//                    saveStringTosp("token",token);
+//                    showToastSync("登录成功");
+//
+//                }else{
+//                    showToastSync("登录失败");
+//                }
+//
+//
 //            }
 //
 //            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String result=response.body().string();
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        showToast(result);
-//                    }
-//                });
-//
+//            public void onFailure(Exception e) {
+//                Log.e("failed",e.getMessage());
 //            }
 //        });
+
+//        应该放在登录成功那个位置
+        navigateTo(HomeActivity.class);
+
 
     }
 }

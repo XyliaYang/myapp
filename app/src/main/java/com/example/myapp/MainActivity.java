@@ -17,14 +17,21 @@ public class MainActivity extends BaseActivity {
     private Button register_btn;
 
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int initLayout() {
+        return R.layout.activity_main;
+    }
 
-
+    @Override
+    protected void initView() {
         btn_login=(Button) findViewById(R.id.btn_login);
         register_btn=findViewById(R.id.btn_register);
+
+    }
+
+    @Override
+    protected void initData() {
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,5 +46,6 @@ public class MainActivity extends BaseActivity {
                 navigateTo(RegisterActivity.class);
             }
         });
+
     }
 }
