@@ -87,7 +87,8 @@ public   class  HomeActivity extends BaseActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-
+//       防止的滑动的时候出现异常
+        viewPager.setOffscreenPageLimit(mFragments.size());
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),mFragments,mTitles));
 
     }

@@ -6,6 +6,7 @@
     <string name="pwd_hint">请输入密码</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_hint">搜索你喜欢的视频</string>
 
 
 </resources>
