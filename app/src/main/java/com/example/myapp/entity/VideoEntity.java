@@ -3,27 +3,29 @@ package com.example.myapp.entity;
 import java.io.Serializable;
 
 public class VideoEntity  implements Serializable {
-    private int id;
-    private String title;
+    private Integer vid;
+    private String vtitle;
     private String author;
-    private  int dzCount;
-    private int collectCount;
-    private int commentCount;
+    private String coverurl;
+    private String headurl;
+    private Integer commentNum;
+    private Integer likeNum;
+    private Integer collectNum;
 
-    public int getId() {
-        return id;
+    public Integer getVid() {
+        return vid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setVid(Integer vid) {
+        this.vid = vid;
     }
 
-    public String getTitle() {
-        return title;
+    public String getVtitle() {
+        return vtitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setVtitle(String vtitle) {
+        this.vtitle = vtitle;
     }
 
     public String getAuthor() {
@@ -34,27 +36,43 @@ public class VideoEntity  implements Serializable {
         this.author = author;
     }
 
-    public int getDzCount() {
-        return dzCount;
+    public String getCoverurl() {
+        return coverurl;
     }
 
-    public void setDzCount(int dzCount) {
-        this.dzCount = dzCount;
+    public void setCoverurl(String coverurl) {
+        this.coverurl = coverurl;
     }
 
-    public int getCollectCount() {
-        return collectCount;
+    public String getHeadurl() {
+        return headurl;
     }
 
-    public void setCollectCount(int collectCount) {
-        this.collectCount = collectCount;
+    public void setHeadurl(String headurl) {
+        this.headurl = headurl;
     }
 
-    public int getCommentCount() {
-        return commentCount;
+    public Integer getCommentNum() {
+        return commentNum;
     }
 
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public Integer getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(Integer collectNum) {
+        this.collectNum = collectNum;
     }
 }

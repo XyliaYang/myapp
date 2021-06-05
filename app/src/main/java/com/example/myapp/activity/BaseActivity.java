@@ -34,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         Toast.makeText(mContext,msg,Toast.LENGTH_LONG).show();
     }
 
-//    ？使用消息队列
+//    ？使用消息队列,但是每个线程貌似只能用一次，否则会报错。
     public void showToastSync(String msg){
         Looper.prepare();
         Toast.makeText(mContext,msg,Toast.LENGTH_LONG).show();

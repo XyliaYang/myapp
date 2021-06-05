@@ -11,11 +11,13 @@ import com.example.myapp.activity.BaseActivity;
 import com.example.myapp.activity.LoginActivity;
 import com.example.myapp.activity.RegisterActivity;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class MainActivity extends BaseActivity {
 
     private Button btn_login;
     private Button register_btn;
-
 
 
     @Override
